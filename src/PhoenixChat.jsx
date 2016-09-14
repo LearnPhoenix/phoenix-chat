@@ -87,9 +87,37 @@ export class PhoenixChat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpen: false
+      isOpen: false,
+      input: "",
+      messages: []
     }
     this.toggleChat = this.toggleChat.bind(this)
+    this.configureChannels = this.configureChannels.bind(this)
+  }
+
+  componentDidMount() {
+    this.socket = new Socket("ws://localhost:4000/socket")
+    this.socket.connect()
+    this.configureChannels("foo")
+  }
+
+  configureChannels(room) {
+    this.channel = this.socket.channel(`room:${room}`)
+    this.channel.join()
+      .receive("ok", ({ messages }) => {
+        console.log(`Succesfully joined the ${room} chat room.`)
+        this.setState({
+          messages: messages || []
+        })
+      })
+      .receive("error", () => {
+        console.log(`Unable to join the ${room} chat room.`)
+      })
+    this.channel.on("message", payload => {
+      this.setState({
+        messages: this.state.messages.concat([payload])
+      })
+    })
   }
 
   toggleChat() {
@@ -100,7 +128,10 @@ export class PhoenixChat extends React.Component {
     return (
       <div>
         { this.state.isOpen
-          ? <PhoenixChatSidebar toggleChat={this.toggleChat} />
+          ? <PhoenixChatSidebar
+              input={this.state.input}
+              messages={this.state.messages}
+              toggleChat={this.toggleChat} />
           : <PhoenixChatButton toggleChat={this.toggleChat} /> }
       </div>
     )
