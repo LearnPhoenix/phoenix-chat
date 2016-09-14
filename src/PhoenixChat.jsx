@@ -1,5 +1,6 @@
 import React from 'react'
 import { Socket } from "phoenix"
+import uuid from 'uuid'
 import style from './style.js'
 
 export class PhoenixChatButton extends React.Component {
@@ -96,9 +97,16 @@ export class PhoenixChat extends React.Component {
   }
 
   componentDidMount() {
-    this.socket = new Socket("ws://localhost:4000/socket")
+    if (!localStorage.phoenix_chat_uuid) {
+      localStorage.phoenix_chat_uuid = uuid.v4()
+    }
+
+    this.uuid = localStorage.phoenix_chat_uuid
+    const params = { uuid: this.uuid }
+    this.socket = new Socket("ws://localhost:4000/socket", { params })
     this.socket.connect()
-    this.configureChannels("foo")
+
+    this.configureChannels(this.uuid)
   }
 
   configureChannels(room) {
