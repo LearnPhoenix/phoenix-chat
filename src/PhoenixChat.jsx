@@ -1,6 +1,20 @@
 import React from 'react'
 import style from './style.js'
 
+export class PhoenixChatButton extends React.Component {
+  render() {
+    return (
+      <div
+        onClick={this.props.toggleChat}
+        style={style.chatButton}>
+        <img
+          src="https://github.com/LearnPhoenix/graphics/blob/master/phoenix-chat-icon.png?raw=true"
+          style={style.chatImage} />
+      </div>
+    )
+  }
+}
+
 export class PhoenixChat extends React.Component {
   constructor(props) {
     super(props)
