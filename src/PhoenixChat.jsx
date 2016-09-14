@@ -33,14 +33,17 @@ export class PhoenixChatSidebar extends React.Component {
   }
 
   render() {
-    const list = !this.state.messages ? null : this.state.messages.map((bubble, i) => {
-      const right = bubble.from === "Client"
+    const list = !this.state.messages ? null : this.state.messages.map(({ body, id, from }, i) => {
+      const right = from === "Client"
+
       return (
-        <div style={{...style.messageWrapper, justifyContent: right ? "flex-end" : "flex-start"}}>
+        <div
+          ref={ ref => { this[`chatMessage:${i}`] = ref }}
+          key={i}
+          style={{...style.messageWrapper, justifyContent: right ? "flex-end" : "flex-start"}}>
           <div
-            key={i}
-            style={ right ? style.chatRight : style.chatLeft }>
-            { bubble.body }
+            style={right ? style.chatRight : style.chatLeft}>
+            { body }
           </div>
         </div>
       )
@@ -53,7 +56,7 @@ export class PhoenixChatSidebar extends React.Component {
               style={{ height: "40px", paddingRight: "5px" }}
               alt="learnphoenix logo"
               src="https://s3.amazonaws.com/learnphoenix-static-assets/favicons/favicon-96x96.png" />
-            <span>PhoenixChat.io</span>
+            <span style={style.title}>PhoenixChat.io</span>
           </div>
           <div
             style={style.close}
@@ -61,7 +64,9 @@ export class PhoenixChatSidebar extends React.Component {
             Close
           </div>
         </div>
-        <div style={style.chatContainer}>
+        <div
+          ref={ref => this.chatContainer = ref}
+          style={style.chatContainer}>
           { list }
         </div>
         <div style={style.inputContainer}>
