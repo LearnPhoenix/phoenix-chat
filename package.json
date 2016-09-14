@@ -44,5 +44,8 @@
       "react",
       "stage-0"
     ]
+  },
+  "dependencies": {
+    "phoenix": "^1.2.0"
   }
 }

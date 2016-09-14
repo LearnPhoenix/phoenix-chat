@@ -1,4 +1,5 @@
 import React from 'react'
+import { Socket } from "phoenix"
 import style from './style.js'
 
 export class PhoenixChatButton extends React.Component {
@@ -19,13 +20,6 @@ export class PhoenixChatSidebar extends React.Component {
   constructor(props) {
     super(props)
     this.closeChat = this.closeChat.bind(this)
-    this.state = {
-      messages: [
-        {from: "Client", body: "Test"},
-        {from: "John", body: "Foo"},
-        {from: "Client", body: "Bar"}
-      ]
-    }
   }
 
   componentDidUpdate() {
