@@ -28,6 +28,13 @@ export class PhoenixChatSidebar extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.messages.length > 0) {
+      const lastMessage = this[`chatMessage:${this.props.messages.length - 1}`]
+      this.chatContainer.scrollTop = lastMessage.offsetTop
+    }
+  }
+
   closeChat() {
     this.props.toggleChat()
   }
