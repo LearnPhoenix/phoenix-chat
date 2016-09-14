@@ -2,9 +2,11 @@
   "name": "phoenix-chat",
   "version": "1.0.0",
   "description": "Extensible React component for real-time chat with PhoenixChat",
-  "main": "index.js",
+  "main": "./dist/PhoenixChat.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "babel src --watch --out-dir dist",
+    "build": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
