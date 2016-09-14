@@ -1,0 +1,30 @@
+{
+  "name": "phoenix-chat",
+  "version": "1.0.0",
+  "description": "Extensible React component for real-time chat with PhoenixChat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/LearnPhoenix/phoenix-chat.git"
+  },
+  "keywords": [
+    "phoenix",
+    "phoenix-chat",
+    "learnphoenix",
+    "learn-phoenix",
+    "elixir",
+    "erlang",
+    "react",
+    "channels",
+    "chat"
+  ],
+  "author": "Sam Corcos <sam@learnphoenix.io> (https://learnphoenix.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LearnPhoenix/phoenix-chat/issues"
+  },
+  "homepage": "https://github.com/LearnPhoenix/phoenix-chat#readme"
+}
