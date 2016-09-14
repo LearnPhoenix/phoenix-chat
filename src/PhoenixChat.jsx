@@ -95,6 +95,8 @@ export class PhoenixChat extends React.Component {
       input: "",
       messages: []
     }
+    this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.toggleChat = this.toggleChat.bind(this)
     this.configureChannels = this.configureChannels.bind(this)
   }
@@ -131,6 +133,21 @@ export class PhoenixChat extends React.Component {
     })
   }
 
+  handleMessageSubmit(e) {
+    if (e.keyCode === 13 && this.state.input !== "") {
+      this.channel.push('message', {
+        room: localStorage.phoenix_chat_uuid,
+        body: this.state.input,
+        timestamp: new Date().getTime()
+      })
+      this.setState({ input: "" })
+    }
+  }
+
+  handleChange(e) {
+    this.setState({ input: e.target.value })
+  }
+
   toggleChat() {
     this.setState({ isOpen: !this.state.isOpen })
   }
@@ -140,6 +157,8 @@ export class PhoenixChat extends React.Component {
       <div>
         { this.state.isOpen
           ? <PhoenixChatSidebar
+              handleChange={this.handleChange}
+              handleMessageSubmit={this.handleMessageSubmit}
               input={this.state.input}
               messages={this.state.messages}
               toggleChat={this.toggleChat} />
