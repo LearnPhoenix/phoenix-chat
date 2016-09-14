@@ -114,6 +114,10 @@ export class PhoenixChat extends React.Component {
     this.configureChannels(this.uuid)
   }
 
+  componentWillUnmount() {
+    this.channel.leave()
+  }
+
   configureChannels(room) {
     this.channel = this.socket.channel(`room:${room}`)
     this.channel.join()
