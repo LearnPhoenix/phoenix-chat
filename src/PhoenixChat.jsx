@@ -35,14 +35,14 @@ export class PhoenixChatSidebar extends React.Component {
   }
 
   render() {
-    const list = !this.state.messages ? null : this.state.messages.map(({ body, id, from }, i) => {
-      const right = from === "Client"
+    const list = !this.props.messages ? null : this.props.messages.map(({ body, id, from }, i) => {
+      const right = from === localStorage.phoenix_chat_uuid
 
       return (
         <div
-          ref={ ref => { this[`chatMessage:${i}`] = ref }}
+          ref={ref => this[`chatMessage:${i}`] = ref}
           key={i}
-          style={{...style.messageWrapper, justifyContent: right ? "flex-end" : "flex-start"}}>
+          style={{ ...style.messageWrapper, justifyContent: right ? "flex-end" : "flex-start" }}>
           <div
             style={right ? style.chatRight : style.chatLeft}>
             { body }
@@ -73,6 +73,9 @@ export class PhoenixChatSidebar extends React.Component {
         </div>
         <div style={style.inputContainer}>
           <input
+            onKeyDown={this.props.handleMessageSubmit}
+            onChange={this.props.handleChange}
+            value={this.props.input}
             type="text"
             style={style.inputBox} />
           <div>
