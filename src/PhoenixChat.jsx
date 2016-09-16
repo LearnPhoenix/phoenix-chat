@@ -116,6 +116,7 @@ export class PhoenixChat extends React.Component {
 
   componentWillUnmount() {
     this.channel.leave()
+    this.adminChannel.leave()
   }
 
   configureChannels(room) {
@@ -135,6 +136,12 @@ export class PhoenixChat extends React.Component {
         messages: this.state.messages.concat([payload])
       })
     })
+
+    this.adminChannel = this.socket.channel(`admin:active_users`)
+    this.adminChannel.join()
+      .receive("ok", ({ id }) => {
+        console.log(`${id} succesfully joined the active_users topic.`)
+      })
   }
 
   handleMessageSubmit(e) {
