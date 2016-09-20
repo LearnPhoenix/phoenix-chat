@@ -35,8 +35,8 @@ export class PhoenixChatSidebar extends React.Component {
   }
 
   render() {
-    const list = !this.props.messages ? null : this.props.messages.map(({ body, id, from }, i) => {
-      const right = from === localStorage.phoenix_chat_uuid
+    const list = !this.props.messages ? null : this.props.messages.map(({ body, id, anonymous_user_id }, i) => {
+      const right = anonymous_user_id === localStorage.phoenix_chat_uuid
 
       return (
         <div
@@ -116,6 +116,7 @@ export class PhoenixChat extends React.Component {
 
   componentWillUnmount() {
     this.channel.leave()
+    this.adminChannel.leave()
   }
 
   configureChannels(room) {
@@ -135,6 +136,11 @@ export class PhoenixChat extends React.Component {
         messages: this.state.messages.concat([payload])
       })
     })
+    this.adminChannel = this.socket.channel(`admin:active_users`)
+    this.adminChannel.join()
+      .receive("ok", () => {
+        console.log(`Succesfully joined the active_users topic.`)
+      })
   }
 
   handleMessageSubmit(e) {
